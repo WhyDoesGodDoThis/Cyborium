@@ -31,6 +31,7 @@ class block:
         self.data += str(item) + ' ~Time~ ' + str(dt.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]) + '\n'
     #aprove hash
     def aprove_hash(self):
+        user = input("Who is mining this block:")
         #hash object
         hasher = s5()
         #increment
@@ -49,7 +50,7 @@ class block:
             ).encode()
             )
             #if hash starts with 000
-            if hasher.hexdigest().startswith('0000'):
+            if hasher.hexdigest().startswith('00000'):
                 #write block to file
                 with open(os.path.join(here, 'blocks/block_file.txt'), 'a') as block_file:
                     block_file.write('[Start Block]\n')
@@ -58,6 +59,7 @@ class block:
                     block_file.write(self.data)
                     block_file.write('[Time Ended] ' + time + '\n')
                     block_file.write('[Block Hash] ' + hasher.hexdigest() + '\n')
+                    block_file.write('[Block Miner] ' + user + ' | Rewarded 5 Cyboium')
                     block_file.write('[End Block]\n\n')
                 #set hash
                 self.hash = hasher.hexdigest()
@@ -67,10 +69,22 @@ class block:
             increment+=6
 
 def transaction(amount, user, user_key, reciever, latest_block):
+    if user == "SYSTEM":
+        print('This username is restricted in standard transactions for security reasons.')
+        return 0
+    if reciever == "SYSTEM":
+        print('This reciever can not recieve transactions.')
+        return 0
     #get user number
     user_num = open(os.path.join(here, 'users.txt')).readlines().index(user+'\n')
     #if key is correct
     if s5(str(user_key).encode()).hexdigest() == open(os.path.join(here, 'hashes.txt')).readlines()[user_num][:-1]:
+        #if user has enough money
+        if get_balence(user) < amount:
+            #tell user
+            print("Transaction Failed: Not enough money")
+            #return
+            return 0
         #add transaction to block
         latest_block.add_item(
             "[Transaction] "+
@@ -81,6 +95,42 @@ def transaction(amount, user, user_key, reciever, latest_block):
         )
     else:
         print("Transaction Failed: Invalid key")
+
+def get_balence(user):
+    #get user number
+    user_num = open(os.path.join(here, 'users.txt')).readlines().index(user+'\n')
+    #get user balence
+    balence = 0
+    #loop through blocks
+    for block in open(os.path.join(here, 'blocks/block_file.txt')).readlines():
+        #if block starts with [Start Block]
+        if block.startswith('[Start Block]'):
+            #set in_block to true
+            in_block = True
+        #if block starts with [End Block]
+        if block.startswith('[End Block]'):
+            #set in_block to false
+            in_block = False
+        #if in block
+        if in_block:
+            #if block starts with [Transaction]
+            if block.startswith('[Transaction]'):
+                #if user is in transaction
+                if user in block:
+                    #if user is reciever
+                    if user == block.split(' -> ')[2].split(' ~Time~ ')[0]:
+                        #add amount to balence
+                        balence += int(block.split(' -> ')[1])
+                    #if user is sender
+                    if user == block.split(' -> ')[0].split(' | ')[0] and open(os.path.join(here, 'hashes.txt')).readlines()[user_num][:-1] == block.split(' -> ')[0].split(' | ')[1]:
+                        #subtract amount from balence
+                        balence -= int(block.split(' -> ')[1])
+            if block.startswith('[Block Miner]'):
+                if user in block:
+                    balence += 5
+    #return balence
+    return balence
+
 def make_user():
     #loop until username is not taken
     while True:
