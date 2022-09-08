@@ -26,12 +26,15 @@ class block:
         #set time made
         self.time_made = str(dt.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3])
         self.data = ""
+        self.tip = 5
     #add item to block
     def add_item(self, item):
+        if item.startswith('[Miner Tip] '):
+            self.tip += int(item.split(' -> ')[1])
         self.data += str(item) + ' ~Time~ ' + str(dt.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]) + '\n'
     #aprove hash
     def aprove_hash(self):
-        user = input("Who is mining this block:")
+        user = input("Block Miner: ")
         #hash object
         hasher = s5()
         #increment
@@ -58,11 +61,12 @@ class block:
                     block_file.write('[Time Made] ' + self.time_made + '\n')
                     block_file.write(self.data)
                     block_file.write('[Time Ended] ' + time + '\n')
+                    block_file.write('[block value] ' + str(increment) + '\n')
                     block_file.write('[Block Hash] ' + hasher.hexdigest() + '\n')
-                    block_file.write('[Block Miner] ' + user + ' | Rewarded 5 Cyboium')
-                    block_file.write('[End Block]\n\n')
-                #set hash
-                self.hash = hasher.hexdigest()
+                    block_file.write('[Block Miner] ' + user + (' | Rewarded %d Cyborium' % self.tip) +'\n')
+                    block_file.write('[End Block]\n')
+                    block_file.write('[Chain Hash] ' + s5(str(open(os.path.join(here, 'blocks/block_file.txt')).read()).encode()).hexdigest() + '\n\n')
+                print("[Block Mined Successfully]")
                 #return
                 return 0
             #increment
@@ -76,7 +80,11 @@ def transaction(amount, user, user_key, reciever, latest_block):
         print('This reciever can not recieve transactions.')
         return 0
     #get user number
-    user_num = open(os.path.join(here, 'users.txt')).readlines().index(user+'\n')
+    if user+'\n' in open(os.path.join(here, 'users.txt')).readlines():
+        user_num = open(os.path.join(here, 'users.txt')).readlines().index(user+'\n')
+    else:
+        print('Transaction Failed: Invalid username or key.')
+        return 0
     #if key is correct
     if s5(str(user_key).encode()).hexdigest() == open(os.path.join(here, 'hashes.txt')).readlines()[user_num][:-1]:
         #if user has enough money
@@ -89,12 +97,44 @@ def transaction(amount, user, user_key, reciever, latest_block):
         latest_block.add_item(
             "[Transaction] "+
             str(user)+' | '+
-            str(user_key)+' -> '+
+            str(s5(user_key.encode()).hexdigest())+' -> '+
             str(amount)+' -> '+
             str(reciever)
         )
+        print("[Transaction Registered Successfully]")
     else:
-        print("Transaction Failed: Invalid key")
+        print("Transaction Failed: Invalid username or key.")
+        return 0
+
+def tip(latest_block):
+    user = input('Username: ')
+    user_key = s5(input('Key: ').encode()).hexdigest()
+    if user == "SYSTEM":
+        print('This username is restricted in standard tips for security reasons.')
+        return 0
+    #get user number
+    if user+'\n' in open(os.path.join(here, 'users.txt')).readlines():
+        user_num = open(os.path.join(here, 'users.txt')).readlines().index(user+'\n')
+    else:
+        print("Tip Failed: Invalid username or key.")
+        return 0
+    #if key is correct
+    if user_key == open(os.path.join(here, 'hashes.txt')).readlines()[user_num][:-1]:
+        amount = input('Amount: ')
+        if get_balence(user) < int(amount):
+            print('Tip Failed: Invalid not enough Cyborium')
+            return 0
+        latest.add_item(
+            '[Miner Tip] '+
+            user+
+            ' | '+
+            user_key+
+            ' -> '+amount
+        )
+        print('[Tip Registered Successfully]')
+    else:
+        print("Tip Failed: Invalid username or key.")
+        return 0
 
 def get_balence(user):
     #get user number
@@ -114,7 +154,7 @@ def get_balence(user):
         #if in block
         if in_block:
             #if block starts with [Transaction]
-            if block.startswith('[Transaction]'):
+            if block.startswith('[Transaction] '):
                 #if user is in transaction
                 if user in block:
                     #if user is reciever
@@ -125,9 +165,12 @@ def get_balence(user):
                     if user == block.split(' -> ')[0].split(' | ')[0] and open(os.path.join(here, 'hashes.txt')).readlines()[user_num][:-1] == block.split(' -> ')[0].split(' | ')[1]:
                         #subtract amount from balence
                         balence -= int(block.split(' -> ')[1])
-            if block.startswith('[Block Miner]'):
+            if block.startswith('[Block Miner] '):
                 if user in block:
-                    balence += 5
+                    balence += int(block.split(' Cyborium')[0].split('Rewarded ')[1])
+            if block.startswith('[Miner Tip] '):
+                if user in block:
+                    balence -= int(block.split(' -> ')[1].split(' ~Time~ ')[0])
     #return balence
     return balence
 
@@ -157,7 +200,7 @@ latest = block()
 #loop
 while True:
     #get user input
-    userinput = int(input('\n\n\nchoose:\n1. make user\n2. run transaction\n3. add mock item to block\n4. minse block\n>>>'))
+    userinput = int(input('\n\n\nchoose:\n1. make user\n2. run transaction\n3. tip block miner\n4. add mock item to block\n5. minse block\n>>>'))
     #if user wants to make user
     if userinput == 1:
         #make user
@@ -167,28 +210,34 @@ while True:
     #if user wants to run transaction
     if userinput == 2:
         #get username
-        username = input('Username:')
+        username = input('Username: ')
         #get key
-        keypass = input('Key:')
+        keypass = input('Key: ')
         #get amount
-        amount = int(input("Amount:"))
+        amount = int(input("Amount: "))
         #get target
-        target = input('Who should recieve:')
+        target = input('Reciever: ')
         #run transaction
         transaction(amount, username, keypass, target, latest)
         #restart loop
         continue
-    #if user wants to add mock data
+    #to tip the Miner
     if userinput == 3:
+        tip(latest)
+        continue
+    #if user wants to add mock data
+    if userinput == 4:
         #add mock data
         latest.add_item("[Mock Data] " + s5(str(r()).encode()).hexdigest())
         #restart loop
         continue
     #if user wants to mine block
-    if userinput == 4:
+    if userinput == 5:
         #mine block
         latest.aprove_hash()
         #initialize new block
         latest = block()
         #restart loop
         continue
+    if userinput == 6:
+        break

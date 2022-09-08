@@ -1,31 +1,42 @@
 [Start Block]
-[Previous Hash]d6e82af56c4171a53591cb8f91c7afc94a6077cd43ed58af4ccbc998ae794609
-[Time Made] 2022-09-08 01:19:09.624
-[Mock Data] 265f3caf8152659648fdbf6afaa1e2d0e48184ea4f84a6c39212db693a7067e8 ~Time~ 2022-09-08 01:19:11.666
-[Mock Data] d055f5b38680f4a88c1de9906feb1ab35ce6762d383a210e99eb379d59032dbd ~Time~ 2022-09-08 01:19:12.208
-[Mock Data] 408477610032496cb8c8546ea8d1705233ce0f93e9a2da2e5460b36d55482dde ~Time~ 2022-09-08 01:19:12.714
-[Mock Data] 3944c269dde3fb9a4afda8cf81d03719f6e40ff403500974ee948062cd3f45c6 ~Time~ 2022-09-08 01:19:13.247
-[Mock Data] c08357c64c97b8295dfde8afdbb11a652fd72aa6899eed571ed6b191e504dd5c ~Time~ 2022-09-08 01:19:13.722
-[Mock Data] ee9c1aa35bc85135a657eb82e1848ed91535413ccc3ed5cba6b13406839c6dda ~Time~ 2022-09-08 01:19:14.273
-[Mock Data] b8aca0054e985c1a05b30be755d119aac27641d633bc6f539de3622a5903d563 ~Time~ 2022-09-08 01:19:14.810
-[Mock Data] 7a71b4cbacdfce0819ca88f1f090c24a9b605a2a84cf18c5770fc384348fc44e ~Time~ 2022-09-08 01:19:15.358
-[Mock Data] c7e5ed2b13700d34c8ffff8238611721731446d976fe33c8d8d3d30122718d4d ~Time~ 2022-09-08 01:19:15.918
-[Mock Data] 31c354e7edb67556f70f66fd50a383decb085ba33d98089187ad36b430e72a87 ~Time~ 2022-09-08 01:19:16.482
-[Mock Data] 02c650b0098cfd287ec079b36c7af834b0a3f0bf682ac01f8b12ba3e5fd602a4 ~Time~ 2022-09-08 01:19:17.069
-[Mock Data] 297f514412ae64ee58376ea2ded5369e39db19fa377949043062954455dcf979 ~Time~ 2022-09-08 01:19:17.646
-[Mock Data] 69db9cbd675c820044f070d4fae04cd9b468f6bc706b6fd07580dd84e0ed20dc ~Time~ 2022-09-08 01:19:18.246
-[Mock Data] 756a4456e5692c2a485241d0dcd469fbfa73d426e3faddc8766711be3488e173 ~Time~ 2022-09-08 01:19:18.815
-[Mock Data] 74cd9bebcd45783b8543ca0870aa3eb595849795a0981e3c8dd5f7f97027acd1 ~Time~ 2022-09-08 01:19:19.380
-[Mock Data] a01fa0c3fd0b1bf546206988eae41ebcf5db24d684e8d423a4c438ebb0f85a42 ~Time~ 2022-09-08 01:19:20.022
-[Time Ended] 2022-09-08 01:20:22.243
-[Block Hash] 00000d368bd19c42407091b36c14583dfade50de10da1dc9c99b6648475fa7b5
-[Block Miner] Andrew | Rewarded 5 Cyboium[End Block]
+[Previous Hash]69a027e4385e109fe3872ec37b3d1cce2da96921621c1a74007ac5576efcda2e
+[Time Made] 2022-09-08 03:43:04.818
+[Time Ended] 2022-09-08 03:43:16.529
+[block value] 3630384
+[Block Hash] 000006cee832f6a9acac48ce694bfc2e47d3aaaf18562d24287548f871d685d4
+[Block Miner] tester | Rewarded 5 Cyborium
+[End Block]
+[Chain Hash] e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 
 [Start Block]
-[Previous Hash] 00000d368bd19c42407091b36c14583dfade50de10da1dc9c99b6648475fa7b5
-[Time Made] 2022-09-08 01:20:22.249
-[Transaction] Andrew | 55aa -> 2 -> tester ~Time~ 2022-09-08 01:20:43.351
-[Time Ended] 2022-09-08 01:21:46.642
-[Block Hash] 000008dafd96c1602b4e54b040667f323dabc5ac5b4c2afd30ddf6886c91517b
-[Block Miner] Andrew | Rewarded 5 Cyboium[End Block]
+[Previous Hash] 000006cee832f6a9acac48ce694bfc2e47d3aaaf18562d24287548f871d685d4
+[Time Made] 2022-09-08 03:43:16.535
+[Time Ended] 2022-09-08 03:43:31.751
+[block value] 4017000
+[Block Hash] 0000005a69575cd65caf09c458bc121c60340fd7bcc3ac13361ba62d1105ba18
+[Block Miner] tester | Rewarded 5 Cyborium
+[End Block]
+[Chain Hash] 5d28b19213c0684d78b49b2319dbef9ae3da72c163eabd87c9c86690eae82355
+
+[Start Block]
+[Previous Hash] 0000005a69575cd65caf09c458bc121c60340fd7bcc3ac13361ba62d1105ba18
+[Time Made] 2022-09-08 03:43:31.756
+[Transaction] tester | 8c24fd573283d9377b9d9cbcfe6d30f439025be61739f6d057adc602145a2a58 -> 10 -> PhoenixAEH ~Time~ 2022-09-08 03:43:57.347
+[Time Ended] 2022-09-08 03:44:20.354
+[block value] 4356276
+[Block Hash] 00000cbc1fc5073e306b61768291d7f25cea744d59b70e27f6aab6a75440c8dc
+[Block Miner] PhoenixAEH | Rewarded 5 Cyborium
+[End Block]
+[Chain Hash] b9ee5c4141eb4e1fc20dcad80d3e16c5cc53ec17d8170c7982e95c94b9547780
+
+[Start Block]
+[Previous Hash] 00000cbc1fc5073e306b61768291d7f25cea744d59b70e27f6aab6a75440c8dc
+[Time Made] 2022-09-08 03:44:20.361
+[Miner Tip] PhoenixAEH | cb4899527c496a5e82c33cb321b96e1a801a20f2cdc4122f276aeeff75743ed8 -> 3 ~Time~ 2022-09-08 03:45:40.293
+[Time Ended] 2022-09-08 03:45:54.302
+[block value] 3270138
+[Block Hash] 000003a50e7ec9ad3816b18ddaff7d0d9bfba9871a91878d1af55961d9729914
+[Block Miner] tester | Rewarded 8 Cyborium
+[End Block]
+[Chain Hash] dede7e1f6a8e4dbe51527c06a7397fb08649a4184be677f43506f76ea42b8793
 

@@ -1,2 +1,2 @@
 # Cyborium
-A crypto currency
+A hypothetical crypto currency
