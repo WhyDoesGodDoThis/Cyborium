@@ -1,42 +1,31 @@
 [Start Block]
-[Previous Hash]69a027e4385e109fe3872ec37b3d1cce2da96921621c1a74007ac5576efcda2e
-[Time Made] 2022-09-08 03:43:04.818
-[Time Ended] 2022-09-08 03:43:16.529
-[block value] 3630384
-[Block Hash] 000006cee832f6a9acac48ce694bfc2e47d3aaaf18562d24287548f871d685d4
-[Block Miner] tester | Rewarded 5 Cyborium
+[Previous Hash] fabd381ff0b98f00e002420620037e3ccf15063145716a6be19ddef4b0e79e50
+[Time Made] 2022-09-09 00:33:59.345
+[Mock Data] 3e17683603dcdc5487ebb3315fe6d881b3c3440726c054f97cad841ae63cf2d0 ~Time~ 2022-09-09 00:34:11.669
+[Mock Data] ea339cb96635cf351bd982694aeca5271ccbba6e28d8c4cd18dad734216fd99c ~Time~ 2022-09-09 00:34:13.083
+[Mock Data] 368573f1df9263ca08ac8d4b8524a0782049f945b4a750db7f53335b81a81efe ~Time~ 2022-09-09 00:34:13.996
+[Mock Data] c12feae28eeb998fe222b89894b60ae1765e3413f98e6bcf456759833eb66ebb ~Time~ 2022-09-09 00:34:14.719
+[Mock Data] 369a8fa71a5fd91ee7e15ed49ce9c196ad8e92341b870c32efb4d80af0febf1f ~Time~ 2022-09-09 00:34:15.398
+[Mock Data] 2b61b8476f69a5989b19efc2939c05f1aae47d51743c4046b6a74bb5812559c0 ~Time~ 2022-09-09 00:34:16.057
+[Time Ended] 2022-09-09 00:34:43.356
+[block value] 6359010
+[Block Hash] 00000019a14b146495048f3f8eccd3d3abcb853722c699aee3729e0771b323a3
+[Block Miner] PhoenixAEH | Rewarded 2 Cyborium
 [End Block]
-[Chain Hash] e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+[Chain Hash] 0000a456e7b5a5eb059e721fb431436883143101275c4077f83fe70298f5623d
+[Chain Hash Time] 2022-09-09 00:34:50.876
+[Chain Value] 88484
 
 [Start Block]
-[Previous Hash] 000006cee832f6a9acac48ce694bfc2e47d3aaaf18562d24287548f871d685d4
-[Time Made] 2022-09-08 03:43:16.535
-[Time Ended] 2022-09-08 03:43:31.751
-[block value] 4017000
-[Block Hash] 0000005a69575cd65caf09c458bc121c60340fd7bcc3ac13361ba62d1105ba18
-[Block Miner] tester | Rewarded 5 Cyborium
+[Previous Hash] 00000019a14b146495048f3f8eccd3d3abcb853722c699aee3729e0771b323a3
+[Time Made] 2022-09-09 00:34:50.883
+[Transaction] PhoenixAEH | cb4899527c496a5e82c33cb321b96e1a801a20f2cdc4122f276aeeff75743ed8 -> 0.1 -> tester ~Time~ 2022-09-09 00:35:32.294
+[Time Ended] 2022-09-09 00:37:58.522
+[block value] 74022498
+[Block Hash] 000000bdc6d8fc2f88f80a6e09622a25a6e690f4555693703cd94a233e48a7bd
+[Block Miner] PhoenixAEH | Rewarded 2 Cyborium
 [End Block]
-[Chain Hash] 5d28b19213c0684d78b49b2319dbef9ae3da72c163eabd87c9c86690eae82355
-
-[Start Block]
-[Previous Hash] 0000005a69575cd65caf09c458bc121c60340fd7bcc3ac13361ba62d1105ba18
-[Time Made] 2022-09-08 03:43:31.756
-[Transaction] tester | 8c24fd573283d9377b9d9cbcfe6d30f439025be61739f6d057adc602145a2a58 -> 10 -> PhoenixAEH ~Time~ 2022-09-08 03:43:57.347
-[Time Ended] 2022-09-08 03:44:20.354
-[block value] 4356276
-[Block Hash] 00000cbc1fc5073e306b61768291d7f25cea744d59b70e27f6aab6a75440c8dc
-[Block Miner] PhoenixAEH | Rewarded 5 Cyborium
-[End Block]
-[Chain Hash] b9ee5c4141eb4e1fc20dcad80d3e16c5cc53ec17d8170c7982e95c94b9547780
-
-[Start Block]
-[Previous Hash] 00000cbc1fc5073e306b61768291d7f25cea744d59b70e27f6aab6a75440c8dc
-[Time Made] 2022-09-08 03:44:20.361
-[Miner Tip] PhoenixAEH | cb4899527c496a5e82c33cb321b96e1a801a20f2cdc4122f276aeeff75743ed8 -> 3 ~Time~ 2022-09-08 03:45:40.293
-[Time Ended] 2022-09-08 03:45:54.302
-[block value] 3270138
-[Block Hash] 000003a50e7ec9ad3816b18ddaff7d0d9bfba9871a91878d1af55961d9729914
-[Block Miner] tester | Rewarded 8 Cyborium
-[End Block]
-[Chain Hash] dede7e1f6a8e4dbe51527c06a7397fb08649a4184be677f43506f76ea42b8793
+[Chain Hash] 0000ccc939f1de6cbf6c827aef1ab60be0efc5b9cadaad85d22c3b0b921450b0
+[Chain Hash Time] 2022-09-09 00:38:05.400
+[Chain Value] 68895
 

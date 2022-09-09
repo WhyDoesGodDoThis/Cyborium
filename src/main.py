@@ -1,16 +1,25 @@
+#imports
 from datetime import datetime as dt
 #dt.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 from hashlib import sha256 as s5
 from random import random as r
 import os
 
-#sets this files location to here
+#the file and chain finders
 here = os.path.dirname(os.path.abspath(__file__))
+block_file = os.path.dirname(os.path.abspath(__file__)) +"/blocks/block_file.txt"
+#limit number of decimal digits to 2
+def limit(x):
+    x = float(x)
+    if len(str(x).split('.')[1]) > 2:
+        raise ValueError("too many decimal digits in amount of cyborium")
+    return round(x, 2)
 class block:
     #initialize block
     def __init__(self):
+        global block_file
         #open block file
-        blockfile = open(os.path.join(here, 'blocks/block_file.txt'))
+        blockfile = open(block_file)
         #get lines
         lines = blockfile.readlines()
         #set prev_hash
@@ -18,22 +27,24 @@ class block:
         #loop through lines backwards
         for line in lines[::-1][1:]:
             #if line starts with [Block Hash]
-            if line.startswith('[Block Hash]'):
+            if line.startswith('[Block Hash] '):
                 #set prev_hash
                 self.prev_hash = line[12:-1]
                 #break loop
                 break
         #set time made
         self.time_made = str(dt.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3])
+        #set data
         self.data = ""
-        self.tip = 5
+        self.tip = 2
     #add item to block
     def add_item(self, item):
         if item.startswith('[Miner Tip] '):
-            self.tip += int(item.split(' -> ')[1])
+            self.tip += limit(item.split(' -> ')[1])
         self.data += str(item) + ' ~Time~ ' + str(dt.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]) + '\n'
     #aprove hash
     def aprove_hash(self):
+        global block_file
         user = input("Block Miner: ")
         #hash object
         hasher = s5()
@@ -53,19 +64,27 @@ class block:
             ).encode()
             )
             #if hash starts with 000
-            if hasher.hexdigest().startswith('00000'):
+            if hasher.hexdigest().startswith('000000'):
                 #write block to file
-                with open(os.path.join(here, 'blocks/block_file.txt'), 'a') as block_file:
-                    block_file.write('[Start Block]\n')
-                    block_file.write('[Previous Hash]' + self.prev_hash + '\n')
-                    block_file.write('[Time Made] ' + self.time_made + '\n')
-                    block_file.write(self.data)
-                    block_file.write('[Time Ended] ' + time + '\n')
-                    block_file.write('[block value] ' + str(increment) + '\n')
-                    block_file.write('[Block Hash] ' + hasher.hexdigest() + '\n')
-                    block_file.write('[Block Miner] ' + user + (' | Rewarded %d Cyborium' % self.tip) +'\n')
-                    block_file.write('[End Block]\n')
-                    block_file.write('[Chain Hash] ' + s5(str(open(os.path.join(here, 'blocks/block_file.txt')).read()).encode()).hexdigest() + '\n\n')
+                with open(block_file, 'a') as block_file_:
+                    block_file_.write('[Start Block]\n')
+                    block_file_.write('[Previous Hash] ' + self.prev_hash + '\n')
+                    block_file_.write('[Time Made] ' + self.time_made + '\n')
+                    block_file_.write(self.data)
+                    block_file_.write('[Time Ended] ' + time + '\n')
+                    block_file_.write('[block value] ' + str(increment) + '\n')
+                    block_file_.write('[Block Hash] ' + hasher.hexdigest() + '\n')
+                    block_file_.write('[Block Miner] ' + user + (' | Rewarded %d Cyborium' % self.tip) +'\n')
+                    block_file_.write('[End Block]\n')
+                    inc = 0
+                    while True:
+                        if s5((str(open(block_file).read()) + str(inc)).encode()).hexdigest().startswith('0000'):
+                            block_file_.write('[Chain Hash] ' + s5((str(open(block_file).read()) + str(inc)).encode()).hexdigest() + '\n')
+                            block_file_.write('[Chain Hash Time] ' + dt.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3] + '\n')
+                            block_file_.write('[Chain Value] ' + str(inc) + '\n\n')
+                            break
+                        inc+= 1
+                #print
                 print("[Block Mined Successfully]")
                 #return
                 return 0
@@ -121,10 +140,10 @@ def tip(latest_block):
     #if key is correct
     if user_key == open(os.path.join(here, 'hashes.txt')).readlines()[user_num][:-1]:
         amount = input('Amount: ')
-        if get_balence(user) < int(amount):
+        if get_balence(user) < limit(amount):
             print('Tip Failed: Invalid not enough Cyborium')
             return 0
-        latest.add_item(
+        latest_block.add_item(
             '[Miner Tip] '+
             user+
             ' | '+
@@ -137,12 +156,13 @@ def tip(latest_block):
         return 0
 
 def get_balence(user):
+    global block_file
     #get user number
     user_num = open(os.path.join(here, 'users.txt')).readlines().index(user+'\n')
     #get user balence
     balence = 0
     #loop through blocks
-    for block in open(os.path.join(here, 'blocks/block_file.txt')).readlines():
+    for block in open(block_file).readlines():
         #if block starts with [Start Block]
         if block.startswith('[Start Block]'):
             #set in_block to true
@@ -160,17 +180,17 @@ def get_balence(user):
                     #if user is reciever
                     if user == block.split(' -> ')[2].split(' ~Time~ ')[0]:
                         #add amount to balence
-                        balence += int(block.split(' -> ')[1])
+                        balence += limit(block.split(' -> ')[1])
                     #if user is sender
-                    if user == block.split(' -> ')[0].split(' | ')[0] and open(os.path.join(here, 'hashes.txt')).readlines()[user_num][:-1] == block.split(' -> ')[0].split(' | ')[1]:
+                    if user == block.split(' -> ')[0].split(' | ')[0].split('[Transaction] ')[1] and open(os.path.join(here, 'hashes.txt')).readlines()[user_num][:-1] == block.split(' -> ')[0].split(' | ')[1]:
                         #subtract amount from balence
-                        balence -= int(block.split(' -> ')[1])
+                        balence -= limit(block.split(' -> ')[1])
             if block.startswith('[Block Miner] '):
                 if user in block:
-                    balence += int(block.split(' Cyborium')[0].split('Rewarded ')[1])
+                    balence += limit(block.split(' Cyborium')[0].split('Rewarded ')[1])
             if block.startswith('[Miner Tip] '):
                 if user in block:
-                    balence -= int(block.split(' -> ')[1].split(' ~Time~ ')[0])
+                    balence -= limit(block.split(' -> ')[1].split(' ~Time~ ')[0])
     #return balence
     return balence
 
@@ -200,7 +220,7 @@ latest = block()
 #loop
 while True:
     #get user input
-    userinput = int(input('\n\n\nchoose:\n1. make user\n2. run transaction\n3. tip block miner\n4. add mock item to block\n5. minse block\n>>>'))
+    userinput = int(input('\n\n\nchoose:\n1. make user\n2. run transaction\n3. tip block miner\n4. add mock item to block\n5. minse block\n6. get acount value\n7. exit\n>>>'))
     #if user wants to make user
     if userinput == 1:
         #make user
@@ -214,7 +234,7 @@ while True:
         #get key
         keypass = input('Key: ')
         #get amount
-        amount = int(input("Amount: "))
+        amount = limit(input("Amount: "))
         #get target
         target = input('Reciever: ')
         #run transaction
@@ -239,5 +259,10 @@ while True:
         latest = block()
         #restart loop
         continue
+    #check balence
     if userinput == 6:
+        print(get_balence(input('Username: ')))
+        continue
+    #if user wants to exit
+    if userinput == 7:
         break
